@@ -10,6 +10,12 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: wp_test
 */
 
+require 'vendor/autoload.php';
+use Michelf\Markdown;
+function markdown_text($text){
+    $html = Markdown::defaultTransform($text);
+    return $html;
+}
 function wptest_register_my_custom_menu_page() {
     add_menu_page(
         __( 'WP Test', 'wp_test' ),
@@ -69,7 +75,7 @@ function f_get_detail_user(){
   if(is_array($data)):
     ?>
       <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><?php _e($data['name']); ?></h5>
+          <div class="modal-title" id="exampleModalLabel"><?php _e( markdown_text('##### '.$data['name'] )); ?></div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
           </button>
